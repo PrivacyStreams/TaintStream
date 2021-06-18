@@ -58,7 +58,7 @@ For details, we leave a README file (if necessary) in each folder.
 Get TaintStream and run an end-to-end example.
 
 ```shell
-git clone XXX
+git clone https://github.com/PKU-Chengxu/TaintStream.git
 cd TaintStream
 pip install -r requirements.txt
 python taint_stream.py -wd ./example -i ExtractDocuments.py -t Author
