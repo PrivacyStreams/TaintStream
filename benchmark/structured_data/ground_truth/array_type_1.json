@@ -1,0 +1,7 @@
+{
+  "Sender": false,
+  "CcSet": true,
+  "CcList": true,
+  "CcSetLength": true,
+  "CcListLength": true
+}

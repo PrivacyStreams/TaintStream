@@ -1,0 +1,7 @@
+{
+  "stddev_pop(Float)": true,
+  "IntSum": true,
+  "IntAvg": true,
+  "ShortSum": false,
+  "ShortAvg": false
+}

@@ -1,0 +1,5 @@
+{
+  "concat_sender": true,
+  "concat_receiver": true,
+  "concat_subject_and_body": true
+}

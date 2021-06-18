@@ -1,0 +1,7 @@
+{
+  "Sender": false,
+  "SenderAddress": true,
+  "Receiver": false,
+  "ReceiverAddress": true,
+  "Puser": true
+}

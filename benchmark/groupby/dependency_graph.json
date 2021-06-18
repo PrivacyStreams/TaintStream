@@ -1,0 +1,52 @@
+{
+  "00000": {
+    "code": "numbers.agg(stddev_pop(col('Float')).alias('stddev_pop(Float)'), sum('Int').alias('IntSum'), avg('Int').alias('IntAvg'), sum('Short').alias('ShortSum'), avg('Short').alias('ShortAvg'))",
+    "source_df": [
+      "numbers"
+    ],
+    "target_df": "numbers.agg(stddev_pop(col('Float')).alias('stddev_pop(Float)'), sum('Int').alias('IntSum'), avg('Int').alias('IntAvg'), sum('Short').alias('ShortSum'), avg('Short').alias('ShortAvg'))",
+    "dependencies": [
+      {
+        "stddev_pop(Float)": [
+          "$'Float'"
+        ]
+      },
+      {
+        "IntSum": [
+          "$Int"
+        ]
+      },
+      {
+        "IntAvg": [
+          "$Int"
+        ]
+      },
+      {
+        "ShortSum": [
+          "$Short"
+        ]
+      },
+      {
+        "ShortAvg": [
+          "$Short"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "numbers = numbers.agg(stddev_pop(col('Float')).alias('stddev_pop(Float)'), sum('Int').alias('IntSum'), avg('Int').alias('IntAvg'), sum('Short').alias('ShortSum'), avg('Short').alias('ShortAvg'))",
+    "source_df": [
+      "numbers.agg(stddev_pop(col('Float')).alias('stddev_pop(Float)'), sum('Int').alias('IntSum'), avg('Int').alias('IntAvg'), sum('Short').alias('ShortSum'), avg('Short').alias('ShortAvg'))"
+    ],
+    "target_df": "numbers",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

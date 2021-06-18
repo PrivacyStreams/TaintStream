@@ -1,0 +1,44 @@
+{
+  "00000": {
+    "code": "emails.select(accept_redundant_args(col('Sender'), col('UniqueBody'), col('Email_ID')).alias('sender_only'), 'Email_ID', 'UniqueBody')",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.select(accept_redundant_args(col('Sender'), col('UniqueBody'), col('Email_ID')).alias('sender_only'), 'Email_ID', 'UniqueBody')",
+    "dependencies": [
+      {
+        "sender_only": [
+          "$'Sender'",
+          "$'UniqueBody'",
+          "$'Email_ID'"
+        ]
+      },
+      {
+        "Email_ID": [
+          "$Email_ID"
+        ]
+      },
+      {
+        "UniqueBody": [
+          "$UniqueBody"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "emails = emails.select(accept_redundant_args(col('Sender'), col('UniqueBody'), col('Email_ID')).alias('sender_only'), 'Email_ID', 'UniqueBody')",
+    "source_df": [
+      "emails.select(accept_redundant_args(col('Sender'), col('UniqueBody'), col('Email_ID')).alias('sender_only'), 'Email_ID', 'UniqueBody')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

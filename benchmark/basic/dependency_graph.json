@@ -1,0 +1,166 @@
+{
+  "00000": {
+    "code": "emails.filter(~(col('IsRead') & col('IsDraft')))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.filter(~(col('IsRead') & col('IsDraft')))",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "~(col('IsRead') & col('IsDraft'))": "filter"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "emails = emails.filter(~(col('IsRead') & col('IsDraft')))",
+    "source_df": [
+      "emails.filter(~(col('IsRead') & col('IsDraft')))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00002": {
+    "code": "emails.withColumn(col_name, concat_ws(';', 'Sender', 'SenderAddress'))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.withColumn(col_name, concat_ws(';', 'Sender', 'SenderAddress'))",
+    "dependencies": [
+      {
+        "concat_sender": [
+          "$Sender",
+          "$SenderAddress"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00003": {
+    "code": "emails = emails.withColumn(col_name, concat_ws(';', 'Sender', 'SenderAddress'))",
+    "source_df": [
+      "emails.withColumn(col_name, concat_ws(';', 'Sender', 'SenderAddress'))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00004": {
+    "code": "emails.withColumn(col_name, concat_ws('-', 'Receiver', 'ReceiverAddress'))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.withColumn(col_name, concat_ws('-', 'Receiver', 'ReceiverAddress'))",
+    "dependencies": [
+      {
+        "concat_receiver": [
+          "$Receiver",
+          "$ReceiverAddress"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00005": {
+    "code": "emails = emails.withColumn(col_name, concat_ws('-', 'Receiver', 'ReceiverAddress'))",
+    "source_df": [
+      "emails.withColumn(col_name, concat_ws('-', 'Receiver', 'ReceiverAddress'))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00006": {
+    "code": "emails.withColumn(col_name, concat_ws(':', lower(col('Subject')), lower(col('UniqueBody'))))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.withColumn(col_name, concat_ws(':', lower(col('Subject')), lower(col('UniqueBody'))))",
+    "dependencies": [
+      {
+        "concat_subject_and_body": [
+          "$'Subject'",
+          "$'UniqueBody'"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00007": {
+    "code": "emails = emails.withColumn(col_name, concat_ws(':', lower(col('Subject')), lower(col('UniqueBody'))))",
+    "source_df": [
+      "emails.withColumn(col_name, concat_ws(':', lower(col('Subject')), lower(col('UniqueBody'))))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00008": {
+    "code": "emails.select('concat_sender', 'concat_receiver', 'concat_subject_and_body')",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.select('concat_sender', 'concat_receiver', 'concat_subject_and_body')",
+    "dependencies": [
+      {
+        "concat_sender": [
+          "$concat_sender"
+        ]
+      },
+      {
+        "concat_receiver": [
+          "$concat_receiver"
+        ]
+      },
+      {
+        "concat_subject_and_body": [
+          "$concat_subject_and_body"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00009": {
+    "code": "emails = emails.select('concat_sender', 'concat_receiver', 'concat_subject_and_body')",
+    "source_df": [
+      "emails.select('concat_sender', 'concat_receiver', 'concat_subject_and_body')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

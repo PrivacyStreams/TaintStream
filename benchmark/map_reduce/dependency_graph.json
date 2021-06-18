@@ -1,0 +1,116 @@
+{
+  "00000": {
+    "code": "emails.where(col('Sender').isNotNull())",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.where(col('Sender').isNotNull())",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "col('Sender').isNotNull()": "filter"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "emails = emails.where(col('Sender').isNotNull())",
+    "source_df": [
+      "emails.where(col('Sender').isNotNull())"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00002": {
+    "code": "emails.join(persons, emails.Sender == persons.Name, how='inner')",
+    "source_df": [
+      "emails",
+      "persons"
+    ],
+    "target_df": "emails.join(persons, emails.Sender == persons.Name, how='inner')",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "emails.Sender == persons.Name": "join"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00003": {
+    "code": "emails = emails.join(persons, emails.Sender == persons.Name, how='inner')",
+    "source_df": [
+      "emails.join(persons, emails.Sender == persons.Name, how='inner')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00004": {
+    "code": "emails = emails.rdd.map(lambda x: map_func(x)).reduceByKey(lambda a, b: reduce_func(a, b)).toDF()",
+    "source_df": [
+      "emails.rdd.map(lambda x: map_func(x)).reduceByKey(lambda a, b: reduce_func(a, b)).toDF()"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00005": {
+    "code": "emails.select(col('_1._1').alias('Sender'), col('_1._2').alias('Receiver'), col('_2._1').alias('SubjectList'), col('_2._2').alias('EmailCount'))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.select(col('_1._1').alias('Sender'), col('_1._2').alias('Receiver'), col('_2._1').alias('SubjectList'), col('_2._2').alias('EmailCount'))",
+    "dependencies": [
+      {
+        "Sender": [
+          "$'_1._1'"
+        ]
+      },
+      {
+        "Receiver": [
+          "$'_1._2'"
+        ]
+      },
+      {
+        "SubjectList": [
+          "$'_2._1'"
+        ]
+      },
+      {
+        "EmailCount": [
+          "$'_2._2'"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00006": {
+    "code": "emails = emails.select(col('_1._1').alias('Sender'), col('_1._2').alias('Receiver'), col('_2._1').alias('SubjectList'), col('_2._2').alias('EmailCount'))",
+    "source_df": [
+      "emails.select(col('_1._1').alias('Sender'), col('_1._2').alias('Receiver'), col('_2._1').alias('SubjectList'), col('_2._2').alias('EmailCount'))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

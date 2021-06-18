@@ -1,0 +1,6 @@
+{
+  "Sender": false,
+  "Receiver": false,
+  "EmailAddress": true,
+  "PhoneNumber": true
+}

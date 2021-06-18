@@ -1,0 +1,101 @@
+{
+  "00000": {
+    "code": "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)])))",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)])))",
+    "dependencies": [
+      {
+        "RealProfile": [
+          "$'Profile'"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)]))).drop('Profile')",
+    "source_df": [
+      "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)])))"
+    ],
+    "target_df": "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)]))).drop('Profile')",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": true
+  },
+  "00002": {
+    "code": "emails = emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)]))).drop('Profile')",
+    "source_df": [
+      "emails.withColumn('RealProfile', from_json(col('Profile'), StructType([StructField('job', StringType(), True), StructField('company', StringType(), True), StructField('ssn', StringType(), True), StructField('residence', StringType(), True), StructField('current_location', ArrayType(StringType()), True), StructField('blood_group', StringType(), True), StructField('website', ArrayType(StringType()), True), StructField('username', StringType(), True), StructField('name', StringType(), True), StructField('sex', StringType(), True), StructField('address', StringType(), True), StructField('mail', StringType(), True), StructField('birthdate', StringType(), True)]))).drop('Profile')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00003": {
+    "code": "emails.groupBy('Sender')",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.groupBy('Sender')",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "'Sender'": "groupBy"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00004": {
+    "code": "emails.groupBy('Sender').agg(mean(length('Content.UniqueBody')).alias('content_length'), first(length(col('RealProfile.address'))).alias('address'), first(col('RealProfile')).alias('Profile'))",
+    "source_df": [
+      "emails.groupBy('Sender')"
+    ],
+    "target_df": "emails.groupBy('Sender').agg(mean(length('Content.UniqueBody')).alias('content_length'), first(length(col('RealProfile.address'))).alias('address'), first(col('RealProfile')).alias('Profile'))",
+    "dependencies": [
+      {
+        "content_length": [
+          "$Content.UniqueBody"
+        ]
+      },
+      {
+        "address": [
+          "$'RealProfile.address'"
+        ]
+      },
+      {
+        "Profile": [
+          "$'RealProfile'"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00005": {
+    "code": "emails = emails.groupBy('Sender').agg(mean(length('Content.UniqueBody')).alias('content_length'), first(length(col('RealProfile.address'))).alias('address'), first(col('RealProfile')).alias('Profile'))",
+    "source_df": [
+      "emails.groupBy('Sender').agg(mean(length('Content.UniqueBody')).alias('content_length'), first(length(col('RealProfile.address'))).alias('address'), first(col('RealProfile')).alias('Profile'))"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

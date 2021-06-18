@@ -1,0 +1,40 @@
+{
+  "mapping": [
+    {
+      "groundTruth = spark.read.json(groundTruthDataFile)": {
+        "new_code": "groundTruth = taint_cols(spark.read.json(groundTruthDataFile), taint_col_handler.get_tainted_cols())",
+        "export_code": "from lib.taint_dataframe import taint_cols\nfrom lib.phi.constant import taint_col_handler\n"
+      }
+    },
+    {
+      "documents = spark.read.json(file_path)": {
+        "new_code": "documents = taint_cols(spark.read.json(file_path), taint_col_handler.get_tainted_cols())",
+        "export_code": "from lib.taint_dataframe import taint_cols\nfrom lib.phi.constant import taint_col_handler\n"
+      }
+    },
+    {
+      "documents = documents.select('puser', 'FileName', 'DocumentTitle', 'Author').withColumn('UserId', regexp_replace(regexp_replace(col('Author'), '\"', ''), \"'\", '')).drop('Author')": {
+        "new_code": "documents = documents.select('puser', 'FileName', 'DocumentTitle', 'Author').withColumn('UserId', pack_StringType(regexp_replace(regexp_replace(get_value_StringType(col('Author')), '\"', ''), \"'\", ''), get_tag_BooleanType(col('Author'))).alias('regexp_replace(regexp_replace(Author, \", ), \\\\\\', )')).drop('Author')",
+        "export_code": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      }
+    },
+    {
+      "groundTruth = groundTruth.select('Author', 'FileSize')": {
+        "new_code": "groundTruth = groundTruth.select('Author', 'FileSize')",
+        "export_code": "\n\n"
+      }
+    },
+    {
+      "documents = documents.join(groundTruth, groundTruth.Author == documents.UserId).select(documents.UserId, 'Filename', 'DocumentTitle', 'Author')": {
+        "new_code": "documents = documents.join(groundTruth, get_value_StringType(groundTruth.Author) == get_value_StringType(documents.UserId)).select(documents.UserId, 'Filename', 'DocumentTitle', 'Author')",
+        "export_code": "\n\n\n\n\n\n\n\n\n"
+      }
+    },
+    {
+      "documents = documents.rdd.map(lambda x: ((x[0], x[1]), 1)).reduceByKey(lambda a, b: my_add(a, b)).toDF()": {
+        "new_code": "documents = documents.rdd.map(lambda x: ((get_value_mr(x[0]), get_value_mr(x[1])), (get_tag_mr(x[0]), get_tag_mr(x[1]), 1, tag_of_lit_mr()))).reduceByKey(lambda a, b: (row_agg_mr(a[0], b[0]), row_agg_mr(a[1], b[1]), my_add(a[2], b[2]), row_agg_mr(a[3], b[3]))).toDF().select(pack_key(pack_key_0(col('_1._1'), col('_2._1')), pack_key_1(col('_1._2'), col('_2._2'))).alias('_1'), pack_value_0(col('_2._3'), col('_2._4')).alias('_2'))",
+        "export_code": "\nfrom lib.taint_dataframe import untaint\noutput_schema = untaint(documents).rdd.map(lambda x: ((x[0], x[1]), 1)).reduceByKey(lambda a, b: my_add(a, b)).toDF().schema\n\nfrom lib.phi.phi_mapreduce import *\nfrom pyspark.sql import Row\nimport re\n\ndef get_value_mr(a):\n    if isinstance(a, Row):\n        return a[0]\n    else: \n        return a\n\ndef get_tag_mr(b):\n    if isinstance(b, Row):\n        return b[1]\n    else:\n        return b\n\ndef row_agg_mr(a,b):\n    return a|b\n\ndef col_agg_mr(*ts):\n    ret = False\n    for t in ts:\n        ret |= t\n    return ret\n\ndef tag_of_lit_mr():\n    return False\n\n\nnew_schema = construct_schema(output_schema)\nkey_schema = new_schema[0].dataType\nvalue_schema = new_schema[1].dataType\n\n@udf(key_schema)\ndef pack_key(*cols):\n    return cols\n\n@udf(value_schema)\ndef pack_value(*cols):\n    return cols\n\n\n@udf(key_schema[0].dataType)\ndef pack_key_0(a, b):\n    return (a, b)\n\n\n@udf(key_schema[1].dataType)\ndef pack_key_1(a, b):\n    return (a, b)\n\n\n@udf(value_schema)\ndef pack_value_0(a, b):\n    return (a, b)\n    \n"
+      }
+    }
+  ]
+}

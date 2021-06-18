@@ -1,0 +1,4 @@
+astroid
+astunparse
+pyspark==2.4.3
+faker

@@ -1,0 +1,7 @@
+{
+  "SenderEmailAddress": true,
+  "SenderJob": false,
+  "ReceiverEmailAddress": true,
+  "ReceiverJob": false,
+  "Subject": true
+}

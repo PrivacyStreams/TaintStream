@@ -1,0 +1,7 @@
+{
+    "insert_code": "from lib.external.basic import *\n",
+    "customized_hook": {
+        "emails = spark.read.json(input_dir, schema=schema)": "emails = tagged_email_reader()",
+        "numbers = spark.read.json(input_dir, schema=schema)": "numbers = tagged_number_reader()"
+    }
+}

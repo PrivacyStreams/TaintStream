@@ -1,0 +1,6 @@
+{
+  "Byte+Short": true,
+  "Int*Long": true,
+  "Float/Double": true,
+  "BinaryDecode": false
+}

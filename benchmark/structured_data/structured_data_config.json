@@ -1,0 +1,7 @@
+{
+    "insert_code": "from lib.external.structured_data import *\n",
+    "customized_hook": {
+        "emails = spark.read.json(email_input_dir, schema=email_schema)": "emails = tagged_email_reader()",
+        "persons = spark.read.json(person_input_dir, schema=person_schema)": "persons = tagged_person_reader()"
+    }
+}

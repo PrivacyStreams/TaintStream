@@ -1,0 +1,6 @@
+{
+  "Content.Subject": false,
+  "Content.UniqueBody": true,
+  "Subject_word_count": false,
+  "UniqueBody_word_count": false
+}

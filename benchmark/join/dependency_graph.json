@@ -1,0 +1,280 @@
+{
+  "00000": {
+    "code": "emails.where(col('Sender').isNotNull())",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.where(col('Sender').isNotNull())",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "col('Sender').isNotNull()": "filter"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00001": {
+    "code": "emails = emails.where(col('Sender').isNotNull())",
+    "source_df": [
+      "emails.where(col('Sender').isNotNull())"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00002": {
+    "code": "persons.withColumn('Sender', col('Name'))",
+    "source_df": [
+      "persons"
+    ],
+    "target_df": "persons.withColumn('Sender', col('Name'))",
+    "dependencies": [
+      {
+        "Sender": [
+          "$'Name'"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00003": {
+    "code": "persons.withColumn('Sender', col('Name')).select(col('Sender'), col('EmailAddress').alias('SenderEmailAddress'), col('job').alias('SenderJob'))",
+    "source_df": [
+      "persons.withColumn('Sender', col('Name'))"
+    ],
+    "target_df": "persons.withColumn('Sender', col('Name')).select(col('Sender'), col('EmailAddress').alias('SenderEmailAddress'), col('job').alias('SenderJob'))",
+    "dependencies": [
+      {
+        "Sender": [
+          "$'Sender'"
+        ]
+      },
+      {
+        "SenderEmailAddress": [
+          "$'EmailAddress'"
+        ]
+      },
+      {
+        "SenderJob": [
+          "$'job'"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00004": {
+    "code": "sender_persons = persons.withColumn('Sender', col('Name')).select(col('Sender'), col('EmailAddress').alias('SenderEmailAddress'), col('job').alias('SenderJob'))",
+    "source_df": [
+      "persons.withColumn('Sender', col('Name')).select(col('Sender'), col('EmailAddress').alias('SenderEmailAddress'), col('job').alias('SenderJob'))"
+    ],
+    "target_df": "sender_persons",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00005": {
+    "code": "emails.join(sender_persons, 'Sender', how='outer')",
+    "source_df": [
+      "emails",
+      "sender_persons"
+    ],
+    "target_df": "emails.join(sender_persons, 'Sender', how='outer')",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "'Sender'": "join"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00006": {
+    "code": "emails = emails.join(sender_persons, 'Sender', how='outer')",
+    "source_df": [
+      "emails.join(sender_persons, 'Sender', how='outer')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00007": {
+    "code": "persons.withColumn('Receiver', col('Name'))",
+    "source_df": [
+      "persons"
+    ],
+    "target_df": "persons.withColumn('Receiver', col('Name'))",
+    "dependencies": [
+      {
+        "Receiver": [
+          "$'Name'"
+        ]
+      },
+      "one by one"
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00008": {
+    "code": "persons.withColumn('Receiver', col('Name')).select(col('Receiver'), col('EmailAddress').alias('ReceiverEmailAddress'), col('job').alias('ReceiverJob'))",
+    "source_df": [
+      "persons.withColumn('Receiver', col('Name'))"
+    ],
+    "target_df": "persons.withColumn('Receiver', col('Name')).select(col('Receiver'), col('EmailAddress').alias('ReceiverEmailAddress'), col('job').alias('ReceiverJob'))",
+    "dependencies": [
+      {
+        "Receiver": [
+          "$'Receiver'"
+        ]
+      },
+      {
+        "ReceiverEmailAddress": [
+          "$'EmailAddress'"
+        ]
+      },
+      {
+        "ReceiverJob": [
+          "$'job'"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00009": {
+    "code": "receiver_persons = persons.withColumn('Receiver', col('Name')).select(col('Receiver'), col('EmailAddress').alias('ReceiverEmailAddress'), col('job').alias('ReceiverJob'))",
+    "source_df": [
+      "persons.withColumn('Receiver', col('Name')).select(col('Receiver'), col('EmailAddress').alias('ReceiverEmailAddress'), col('job').alias('ReceiverJob'))"
+    ],
+    "target_df": "receiver_persons",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00010": {
+    "code": "emails.join(receiver_persons, 'Receiver', how='outer')",
+    "source_df": [
+      "emails",
+      "receiver_persons"
+    ],
+    "target_df": "emails.join(receiver_persons, 'Receiver', how='outer')",
+    "dependencies": [
+      "one by one"
+    ],
+    "conds": {
+      "'Receiver'": "join"
+    },
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00011": {
+    "code": "emails = emails.join(receiver_persons, 'Receiver', how='outer')",
+    "source_df": [
+      "emails.join(receiver_persons, 'Receiver', how='outer')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00012": {
+    "code": "emails.select('SenderEmailAddress', 'SenderJob', 'ReceiverEmailAddress', 'ReceiverJob', 'Subject')",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.select('SenderEmailAddress', 'SenderJob', 'ReceiverEmailAddress', 'ReceiverJob', 'Subject')",
+    "dependencies": [
+      {
+        "SenderEmailAddress": [
+          "$SenderEmailAddress"
+        ]
+      },
+      {
+        "SenderJob": [
+          "$SenderJob"
+        ]
+      },
+      {
+        "ReceiverEmailAddress": [
+          "$ReceiverEmailAddress"
+        ]
+      },
+      {
+        "ReceiverJob": [
+          "$ReceiverJob"
+        ]
+      },
+      {
+        "Subject": [
+          "$Subject"
+        ]
+      }
+    ],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00013": {
+    "code": "emails = emails.select('SenderEmailAddress', 'SenderJob', 'ReceiverEmailAddress', 'ReceiverJob', 'Subject')",
+    "source_df": [
+      "emails.select('SenderEmailAddress', 'SenderJob', 'ReceiverEmailAddress', 'ReceiverJob', 'Subject')"
+    ],
+    "target_df": "emails",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  },
+  "00014": {
+    "code": "emails.count()",
+    "source_df": [
+      "emails"
+    ],
+    "target_df": "emails.count()",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": true
+  },
+  "00015": {
+    "code": "row_num = emails.count()",
+    "source_df": [
+      "emails.count()"
+    ],
+    "target_df": "row_num",
+    "dependencies": [],
+    "conds": {},
+    "is_input": false,
+    "input_dir": "",
+    "is_output": false
+  }
+}

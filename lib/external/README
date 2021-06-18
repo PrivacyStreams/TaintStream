@@ -1,0 +1,3 @@
+This directory contains the lib files that defined by users. 
+For example, users can define their own hoooked input method.
+We pre-define some hooked input methods for our benchmark. 
